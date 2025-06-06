@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: zenni-backend
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - JWT_SECRET=zenni_secret_key
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=zenni
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+    depends_on:
+      - postgres
+    networks:
+      - zenni-network
+
+  frontend:
+    build: ./frontend
+    container_name: zenni-frontend
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - zenni-network
+
+  postgres:
+    image: postgres:14
+    container_name: zenni-postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=zenni
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - zenni-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: zenni-pgadmin
+    restart: always
+    ports:
+      - "5050:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@zenni.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    networks:
+      - zenni-network
+
+volumes:
+  postgres_data:
+  pgadmin_data:
+
+networks:
+  zenni-network:
+    driver: bridge
+

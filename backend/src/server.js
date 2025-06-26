@@ -4,30 +4,38 @@
  * Este arquivo configura e inicia o servidor Express para a API.
  */
 
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const morgan = require('morgan');
-const routes = require('./routes');
-const errorHandler = require('./middlewares/errorHandler');
-const logger = require('./config/logger');
-const database = require('./config/database');
+const express = require("express");
+const cors = require("cors");
+const helmet = require("helmet");
+const morgan = require("morgan");
+const routes = require("./routes");
+const errorHandler = require("./middlewares/errorHandler");
+const logger = require("./config/logger");
+const database = require("./config/database");
 
 // Carrega as variáveis de ambiente
-require('dotenv').config();
+require("dotenv").config();
 
 // Cria a aplicação Express
 const app = express();
 
 // Configurações de middleware
 app.use(helmet()); // Segurança
-app.use(cors()); // CORS
+
+// Configuração explícita do CORS para permitir o frontend
+app.use(cors({
+  origin: "*", // Permite todas as origens
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Métodos permitidos
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+}));
+
 app.use(express.json()); // Parse de JSON
 app.use(express.urlencoded({ extended: true })); // Parse de URL encoded
-app.use(morgan('combined', { stream: { write: message => logger.info(message.trim()) } })); // Logging
+app.use(morgan("combined", { stream: { write: message => logger.info(message.trim()) } })); // Logging
 
 // Rotas
-app.use('/api', routes);
+app.use("/api", routes);
 
 // Middleware de tratamento de erros
 app.use(errorHandler);
@@ -42,7 +50,7 @@ const startServer = async () => {
     const dbConnected = await database.testConnection();
     
     if (!dbConnected) {
-      logger.error('Não foi possível conectar ao banco de dados. Verifique as configurações.');
+      logger.error("Não foi possível conectar ao banco de dados. Verifique as configurações.");
       process.exit(1);
     }
 
@@ -63,15 +71,16 @@ const startServer = async () => {
 startServer();
 
 // Tratamento de erros não capturados
-process.on('uncaughtException', (error) => {
+process.on("uncaughtException", (error) => {
   logger.error(`Erro não capturado: ${error.message}`);
   process.exit(1);
 });
 
-process.on('unhandledRejection', (reason, promise) => {
+process.on("unhandledRejection", (reason, promise) => {
   logger.error(`Promessa rejeitada não tratada: ${reason}`);
   process.exit(1);
 });
 
 module.exports = app;
+
 

@@ -5,10 +5,10 @@
  * implementando a estrutura multi-tenant.
  */
 
-const { DataTypes } = require('sequelize');
-const { sequelize } = require('../config/database');
+const { DataTypes } = require("sequelize");
+const { sequelize } = require("../config/database"); // Corrigido para importar a instância sequelize via desestruturação
 
-const Company = sequelize.define('Company', {
+const Company = sequelize.define("Company", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
@@ -24,11 +24,11 @@ const Company = sequelize.define('Company', {
   },
   primaryColor: {
     type: DataTypes.STRING,
-    defaultValue: '#7F00FF', // Cor padrão: Purple Creativity
+    defaultValue: "#7F00FF", // Cor padrão: Purple Creativity
   },
   secondaryColor: {
     type: DataTypes.STRING,
-    defaultValue: '#0057FF', // Cor padrão: Blue Trust
+    defaultValue: "#0057FF", // Cor padrão: Blue Trust
   },
   active: {
     type: DataTypes.BOOLEAN,
@@ -55,21 +55,22 @@ const Company = sequelize.define('Company', {
     allowNull: true,
   },
   subscriptionPlan: {
-    type: DataTypes.ENUM('basic', 'premium', 'enterprise'),
-    defaultValue: 'basic',
+    type: DataTypes.ENUM("basic", "premium", "enterprise"),
+    defaultValue: "basic",
   },
   subscriptionStatus: {
-    type: DataTypes.ENUM('active', 'trial', 'expired', 'cancelled'),
-    defaultValue: 'trial',
+    type: DataTypes.ENUM("active", "trial", "expired", "cancelled"),
+    defaultValue: "trial",
   },
   trialEndsAt: {
     type: DataTypes.DATE,
     allowNull: true,
   },
 }, {
-  tableName: 'companies',
+  tableName: "companies",
   timestamps: true,
 });
 
 module.exports = Company;
+
 

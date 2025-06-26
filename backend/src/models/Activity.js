@@ -4,41 +4,41 @@
  * Este modelo representa uma atividade no CRM, como uma ligação, reunião ou email.
  */
 
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const { DataTypes } = require("sequelize");
+const sequelize = require("../config/database");
 
-const Activity = sequelize.define('Activity', {
+const Activity = sequelize.define("Activity", {
   id: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
-    autoIncrement: true
   },
   contactId: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'Contacts',
-      key: 'id'
+      model: "Contacts",
+      key: "id"
     }
   },
   companyId: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'Companies',
-      key: 'id'
+      model: "Companies",
+      key: "id"
     }
   },
   userId: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'Users',
-      key: 'id'
+      model: "Users",
+      key: "id"
     }
   },
   type: {
-    type: DataTypes.ENUM('call', 'meeting', 'email', 'whatsapp', 'other'),
+    type: DataTypes.ENUM("call", "meeting", "email", "whatsapp", "other"),
     allowNull: false
   },
   title: {
@@ -70,9 +70,10 @@ const Activity = sequelize.define('Activity', {
     allowNull: true
   }
 }, {
-  tableName: 'activities',
+  tableName: "activities",
   timestamps: true
 });
 
 module.exports = Activity;
+
 

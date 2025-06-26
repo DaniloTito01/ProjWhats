@@ -5,10 +5,10 @@
  * associadas a uma empresa específica.
  */
 
-const { DataTypes } = require('sequelize');
-const { sequelize } = require('../config/database');
+const { DataTypes } = require("sequelize");
+const { sequelize } = require("../config/database"); // Corrigido para importar a instância sequelize via desestruturação
 
-const Campaign = sequelize.define('Campaign', {
+const Campaign = sequelize.define("Campaign", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
@@ -23,16 +23,16 @@ const Campaign = sequelize.define('Campaign', {
     allowNull: true,
   },
   status: {
-    type: DataTypes.ENUM('draft', 'scheduled', 'in_progress', 'completed', 'cancelled'),
-    defaultValue: 'draft',
+    type: DataTypes.ENUM("draft", "scheduled", "in_progress", "completed", "cancelled"),
+    defaultValue: "draft",
   },
   messageTemplate: {
     type: DataTypes.TEXT,
     allowNull: false,
   },
   mediaType: {
-    type: DataTypes.ENUM('none', 'image', 'audio', 'video'),
-    defaultValue: 'none',
+    type: DataTypes.ENUM("none", "image", "audio", "video"),
+    defaultValue: "none",
   },
   mediaUrl: {
     type: DataTypes.STRING,
@@ -91,20 +91,21 @@ const Campaign = sequelize.define('Campaign', {
     defaultValue: 0,
   },
 }, {
-  tableName: 'campaigns',
+  tableName: "campaigns",
   timestamps: true,
   indexes: [
     {
-      fields: ['companyId'],
+      fields: ["companyId"],
     },
     {
-      fields: ['status'],
+      fields: ["status"],
     },
     {
-      fields: ['scheduledAt'],
+      fields: ["scheduledAt"],
     },
   ],
 });
 
 module.exports = Campaign;
+
 

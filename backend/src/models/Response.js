@@ -5,10 +5,10 @@
  * associadas a uma mensagem, contato e empresa específicos.
  */
 
-const { DataTypes } = require('sequelize');
-const { sequelize } = require('../config/database');
+const { DataTypes } = require("sequelize");
+const { sequelize } = require("../config/database"); // Corrigido para importar a instância sequelize via desestruturação
 
-const Response = sequelize.define('Response', {
+const Response = sequelize.define("Response", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
@@ -19,8 +19,8 @@ const Response = sequelize.define('Response', {
     allowNull: false,
   },
   mediaType: {
-    type: DataTypes.ENUM('none', 'image', 'audio', 'video'),
-    defaultValue: 'none',
+    type: DataTypes.ENUM("none", "image", "audio", "video"),
+    defaultValue: "none",
   },
   mediaUrl: {
     type: DataTypes.STRING,
@@ -59,23 +59,24 @@ const Response = sequelize.define('Response', {
     allowNull: true,
   },
 }, {
-  tableName: 'responses',
+  tableName: "responses",
   timestamps: true,
   indexes: [
     {
-      fields: ['messageId'],
+      fields: ["messageId"],
     },
     {
-      fields: ['contactId'],
+      fields: ["contactId"],
     },
     {
-      fields: ['companyId'],
+      fields: ["companyId"],
     },
     {
-      fields: ['isRead'],
+      fields: ["isRead"],
     },
   ],
 });
 
 module.exports = Response;
+
 

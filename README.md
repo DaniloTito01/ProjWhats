@@ -193,4 +193,3 @@ Este projeto está licenciado sob a licença MIT - veja o arquivo LICENSE para d
 
 Para suporte ou dúvidas, entre em contato pelo email: suporte@zenni.com
 
-# ProjWhats

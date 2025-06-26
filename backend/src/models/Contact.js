@@ -5,10 +5,10 @@
  * associados a uma empresa específica.
  */
 
-const { DataTypes } = require('sequelize');
-const { sequelize } = require('../config/database');
+const { DataTypes } = require("sequelize");
+const { sequelize } = require("../config/database"); // Corrigido para importar a instância sequelize via desestruturação
 
-const Contact = sequelize.define('Contact', {
+const Contact = sequelize.define("Contact", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
@@ -62,22 +62,23 @@ const Contact = sequelize.define('Contact', {
     defaultValue: {},
   },
 }, {
-  tableName: 'contacts',
+  tableName: "contacts",
   timestamps: true,
   indexes: [
     {
-      fields: ['phone', 'companyId'],
+      fields: ["phone", "companyId"],
       unique: true,
     },
     {
-      fields: ['companyId'],
+      fields: ["companyId"],
     },
     {
-      fields: ['tags'],
-      using: 'gin',
+      fields: ["tags"],
+      using: "gin",
     },
   ],
 });
 
 module.exports = Contact;
+
 

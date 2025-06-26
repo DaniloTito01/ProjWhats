@@ -4,37 +4,37 @@
  * Este modelo representa uma tarefa no CRM, como um lembrete ou uma ação a ser realizada.
  */
 
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const { DataTypes } = require("sequelize");
+const sequelize = require("../config/database");
 
-const Task = sequelize.define('Task', {
+const Task = sequelize.define("Task", {
   id: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
-    autoIncrement: true
   },
   contactId: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'Contacts',
-      key: 'id'
+      model: "Contacts",
+      key: "id"
     }
   },
   companyId: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'Companies',
-      key: 'id'
+      model: "Companies",
+      key: "id"
     }
   },
   userId: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'Users',
-      key: 'id'
+      model: "Users",
+      key: "id"
     }
   },
   title: {
@@ -50,8 +50,8 @@ const Task = sequelize.define('Task', {
     allowNull: false
   },
   priority: {
-    type: DataTypes.ENUM('low', 'medium', 'high'),
-    defaultValue: 'medium'
+    type: DataTypes.ENUM("low", "medium", "high"),
+    defaultValue: "medium"
   },
   completed: {
     type: DataTypes.BOOLEAN,
@@ -62,9 +62,10 @@ const Task = sequelize.define('Task', {
     allowNull: true
   }
 }, {
-  tableName: 'tasks',
+  tableName: "tasks",
   timestamps: true
 });
 
 module.exports = Task;
+
 

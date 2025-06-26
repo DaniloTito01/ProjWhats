@@ -5,11 +5,11 @@
  * administradores ou operadores, associados a uma empresa específica.
  */
 
-const { DataTypes } = require('sequelize');
-const { sequelize } = require('../config/database');
-const bcrypt = require('bcrypt');
+const { DataTypes } = require("sequelize");
+const { sequelize } = require("../config/database"); // Corrigido para importar a instância sequelize via desestruturação
+const bcrypt = require("bcrypt");
 
-const User = sequelize.define('User', {
+const User = sequelize.define("User", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
@@ -32,9 +32,9 @@ const User = sequelize.define('User', {
     allowNull: false,
   },
   role: {
-    type: DataTypes.ENUM('admin', 'operator'),
+    type: DataTypes.ENUM("admin", "operator"),
     allowNull: false,
-    defaultValue: 'operator',
+    defaultValue: "operator",
   },
   active: {
     type: DataTypes.BOOLEAN,
@@ -48,7 +48,7 @@ const User = sequelize.define('User', {
     allowNull: false,
   },
 }, {
-  tableName: 'users',
+  tableName: "users",
   timestamps: true,
   hooks: {
     // Hash da senha antes de salvar
@@ -60,7 +60,7 @@ const User = sequelize.define('User', {
     },
     // Hash da senha antes de atualizar
     beforeUpdate: async (user) => {
-      if (user.changed('password')) {
+      if (user.changed("password")) {
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(user.password, salt);
       }
@@ -74,4 +74,5 @@ User.prototype.checkPassword = async function(password) {
 };
 
 module.exports = User;
+
 

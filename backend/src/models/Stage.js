@@ -5,10 +5,10 @@
  * associados a uma empresa específica.
  */
 
-const { DataTypes } = require('sequelize');
-const { sequelize } = require('../config/database');
+const { DataTypes } = require("sequelize");
+const { sequelize } = require("../config/database"); // Corrigido para importar a instância sequelize via desestruturação
 
-const Stage = sequelize.define('Stage', {
+const Stage = sequelize.define("Stage", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
@@ -24,7 +24,7 @@ const Stage = sequelize.define('Stage', {
   },
   color: {
     type: DataTypes.STRING,
-    defaultValue: '#7F00FF', // Cor padrão: Purple Creativity
+    defaultValue: "#7F00FF", // Cor padrão: Purple Creativity
   },
   position: {
     type: DataTypes.INTEGER,
@@ -43,17 +43,18 @@ const Stage = sequelize.define('Stage', {
     defaultValue: false,
   },
 }, {
-  tableName: 'stages',
+  tableName: "stages",
   timestamps: true,
   indexes: [
     {
-      fields: ['companyId'],
+      fields: ["companyId"],
     },
     {
-      fields: ['position'],
+      fields: ["position"],
     },
   ],
 });
 
 module.exports = Stage;
+
 

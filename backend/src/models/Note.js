@@ -1,40 +1,40 @@
 /**
  * Modelo de Nota
  * 
- * Este modelo representa uma nota no CRM, associada a um contato.
+ * Este modelo representa uma nota no CRM, associado a um contato.
  */
 
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const { DataTypes } = require("sequelize");
+const sequelize = require("../config/database");
 
-const Note = sequelize.define('Note', {
+const Note = sequelize.define("Note", {
   id: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
-    autoIncrement: true
   },
   contactId: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'Contacts',
-      key: 'id'
+      model: "Contacts",
+      key: "id"
     }
   },
   companyId: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'Companies',
-      key: 'id'
+      model: "Companies",
+      key: "id"
     }
   },
   userId: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'Users',
-      key: 'id'
+      model: "Users",
+      key: "id"
     }
   },
   content: {
@@ -42,9 +42,10 @@ const Note = sequelize.define('Note', {
     allowNull: false
   }
 }, {
-  tableName: 'notes',
+  tableName: "notes",
   timestamps: true
 });
 
 module.exports = Note;
+
 
